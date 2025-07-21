@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Empleado {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  puesto    String
+  salario   Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ventas    Venta[]
+}
+
+model Marca {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  productos Producto[]
+}
+
+model Producto {
+  id          Int     @id @default(autoincrement())
+  nombre      String
+  precio      Float
+  stock       Int
+  marcaId     Int
+  marca       Marca   @relation(fields: [marcaId], references: [id])
+  proveedorProducto Proveedor_Producto[]
+  detallesPedido    Detalles_Pedido[]
+  detallesVenta     Detalles_Venta[]
+}
+
+model Proveedor {
+  id        Int     @id @default(autoincrement())
+  nombre    String
+  contacto  String
+  proveedorProducto Proveedor_Producto[]
+  pedidos   Pedido[]
+}
+
+model Proveedor_Producto {
+  id           Int        @id @default(autoincrement())
+  proveedorId  Int
+  productoId   Int
+  proveedor    Proveedor  @relation(fields: [proveedorId], references: [id])
+  producto     Producto   @relation(fields: [productoId], references: [id])
+}
+
+model Pedido {
+  id        Int     @id @default(autoincrement())
+  fecha     DateTime
+  proveedorId Int
+  proveedor Proveedor @relation(fields: [proveedorId], references: [id])
+  detalles  Detalles_Pedido[]
+}
+
+model Detalles_Pedido {
+  id        Int     @id @default(autoincrement())
+  pedidoId  Int
+  productoId Int
+  cantidad  Int
+  pedido    Pedido   @relation(fields: [pedidoId], references: [id])
+  producto  Producto @relation(fields: [productoId], references: [id])
+}
+
+model Venta {
+  id        Int     @id @default(autoincrement())
+  fecha     DateTime
+  empleadoId Int
+  empleado  Empleado @relation(fields: [empleadoId], references: [id])
+  detalles  Detalles_Venta[]
+}
+
+model Detalles_Venta {
+  id        Int     @id @default(autoincrement())
+  ventaId   Int
+  productoId Int
+  cantidad  Int
+  venta     Venta    @relation(fields: [ventaId], references: [id])
+  producto  Producto @relation(fields: [productoId], references: [id])
+}
