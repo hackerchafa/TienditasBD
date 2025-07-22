@@ -1,0 +1,478 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "BD_Tieditas API",
+        "version": "1.0.0",
+        "description": "API RESTful para gestión de empleados, marcas, productos, proveedores, pedidos y ventas."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000"
+        }
+    ],
+    "paths": {
+        "/empleado": {
+            "get": {
+                "summary": "Obtener todos los empleados",
+                "responses": {
+                    "200": {
+                        "description": "Lista de empleados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Empleado" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear un nuevo empleado",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" },
+                                    "puesto": { "type": "string" },
+                                    "salario": { "type": "number" }
+                                },
+                                "required": ["nombre", "puesto", "salario"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Empleado creado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Empleado" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/empleado/{id}": {
+            "get": {
+                "summary": "Obtener un empleado por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Empleado encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Empleado" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Empleado no encontrado" }
+                }
+            },
+            "put": {
+                "summary": "Actualizar un empleado",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" },
+                                    "puesto": { "type": "string" },
+                                    "salario": { "type": "number" }
+                                },
+                                "required": ["nombre", "puesto", "salario"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Empleado actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Empleado" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Empleado no encontrado" }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar un empleado",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "204": { "description": "Empleado eliminado" },
+                    "404": { "description": "Empleado no encontrado" }
+                }
+            }
+        },
+        "/marca": {
+            "get": {
+                "summary": "Obtener todas las marcas",
+                "responses": {
+                    "200": {
+                        "description": "Lista de marcas",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Marca" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear una nueva marca",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" }
+                                },
+                                "required": ["nombre"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Marca creada",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Marca" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/marca/{id}": {
+            "get": {
+                "summary": "Obtener una marca por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Marca encontrada",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Marca" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Marca no encontrada" }
+                }
+            },
+            "put": {
+                "summary": "Actualizar una marca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" }
+                                },
+                                "required": ["nombre"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Marca actualizada",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Marca" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Marca no encontrada" }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar una marca",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "204": { "description": "Marca eliminada" },
+                    "404": { "description": "Marca no encontrada" }
+                }
+            }
+        },
+        "/producto": {
+            "get": {
+                "summary": "Obtener todos los productos",
+                "responses": {
+                    "200": {
+                        "description": "Lista de productos",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/components/schemas/Producto" }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Crear un nuevo producto",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" },
+                                    "precio": { "type": "number" },
+                                    "stock": { "type": "integer" },
+                                    "marcaId": { "type": "integer" }
+                                },
+                                "required": ["nombre", "precio", "stock", "marcaId"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Producto" }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/producto/{id}": {
+            "get": {
+                "summary": "Obtener un producto por ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Producto" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Producto no encontrado" }
+                }
+            },
+            "put": {
+                "summary": "Actualizar un producto",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nombre": { "type": "string" },
+                                    "precio": { "type": "number" },
+                                    "stock": { "type": "integer" },
+                                    "marcaId": { "type": "integer" }
+                                },
+                                "required": ["nombre", "precio", "stock", "marcaId"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": { "$ref": "#/components/schemas/Producto" }
+                            }
+                        }
+                    },
+                    "404": { "description": "Producto no encontrado" }
+                }
+            },
+            "delete": {
+                "summary": "Eliminar un producto",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "204": { "description": "Producto eliminado" },
+                    "404": { "description": "Producto no encontrado" }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Empleado": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "nombre": { "type": "string" },
+                    "puesto": { "type": "string" },
+                    "salario": { "type": "number" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" }
+                }
+            },
+            "Marca": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "nombre": { "type": "string" },
+                    "productos": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/Producto" }
+                    }
+                }
+            },
+            "Producto": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "nombre": { "type": "string" },
+                    "precio": { "type": "number" },
+                    "stock": { "type": "integer" },
+                    "marcaId": { "type": "integer" },
+                    "marca": { "$ref": "#/components/schemas/Marca" }
+                }
+            },
+            "Proveedor": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "nombre": { "type": "string" },
+                    "contacto": { "type": "string" }
+                }
+            },
+            "Pedido": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "fecha": { "type": "string", "format": "date-time" },
+                    "proveedorId": { "type": "integer" },
+                    "proveedor": { "$ref": "#/components/schemas/Proveedor" },
+                    "detalles": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/Detalles_Pedido" }
+                    }
+                }
+            },
+            "Detalles_Pedido": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "pedidoId": { "type": "integer" },
+                    "productoId": { "type": "integer" },
+                    "cantidad": { "type": "integer" },
+                    "pedido": { "$ref": "#/components/schemas/Pedido" },
+                    "producto": { "$ref": "#/components/schemas/Producto" }
+                }
+            },
+            "Venta": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "fecha": { "type": "string", "format": "date-time" },
+                    "empleadoId": { "type": "integer" },
+                    "empleado": { "$ref": "#/components/schemas/Empleado" },
+                    "detalles": {
+                        "type": "array",
+                        "items": { "$ref": "#/components/schemas/Detalles_Venta" }
+                    }
+                }
+            },
+            "Detalles_Venta": {
+                "type": "object",
+                "properties": {
+                    "id": { "type": "integer" },
+                    "ventaId": { "type": "integer" },
+                    "productoId": { "type": "integer" },
+                    "cantidad": { "type": "integer" },
+                    "venta": { "$ref": "#/components/schemas/Venta" },
+                    "producto": { "$ref": "#/components/schemas/Producto" }
+                }
+            }
+        }
+    }
+}
