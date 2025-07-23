@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Control de Tienda de Abarrotes</title>
+  <!-- Enlazamos el archivo de estilos -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Encabezado y navegación principal -->
+  <header>
+    <h1>Dashboard - Tienda de Abarrotes</h1>
+    <nav>
+      <!-- Botones para cambiar de sección -->
+      <button onclick="showSection('dashboard')">Dashboard</button>
+      <button onclick="showSection('productos')">Productos</button>
+      <button onclick="showSection('ventas')">Ventas</button>
+      <button onclick="showSection('proveedores')">Proveedores</button>
+      <button onclick="showSection('empleados')">Empleados</button>
+      <button onclick="showSection('reportes')">Reportes</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Sección Dashboard: resumen del día -->
+    <section id="dashboard" class="active">
+      <h2>Resumen del Día</h2>
+      <div id="resumen-dia"></div>
+    </section>
+
+    <!-- Sección Productos: formulario y tabla de inventario -->
+    <section id="productos">
+      <h2>Inventario de Productos</h2>
+      <form id="form-producto">
+        <input type="text" placeholder="Nombre" id="prod-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+        <input type="number" placeholder="Precio" id="prod-precio" required min="0" step="1" inputmode="numeric">
+        <input type="number" placeholder="Cantidad" id="prod-cantidad" required min="0" step="1" inputmode="numeric">
+        <input type="date" placeholder="Caducidad" id="prod-caducidad">
+        <input type="text" placeholder="Marca" id="prod-marca">
+        <button type="submit">Agregar Producto</button>
+      </form>
+      <table id="tabla-productos"></table>
+    </section>
+
+    <!-- Sección Ventas: formulario y tabla de ventas -->
+    <section id="ventas">
+      <h2>Registro de Ventas</h2>
+      <form id="form-venta">
+        <input type="text" id="venta-fecha" readonly style="background:#eee;" placeholder="Fecha y hora automática">
+        <select id="venta-producto" required></select>
+        <input type="number" placeholder="Cantidad" id="venta-cantidad" required min="1" step="1" inputmode="numeric">
+        <select id="venta-metodo">
+          <option value="efectivo">Efectivo</option>
+          <option value="tarjeta">Tarjeta</option>
+          <option value="transferencia">Transferencia</option>
+        </select>
+        <input type="number" placeholder="Con cuánto paga" id="venta-pago" min="0" step="1" inputmode="numeric" pattern="[0-9]+">
+        <button type="submit">Registrar Venta</button>
+      </form>
+      <table id="tabla-ventas"></table>
+    </section>
+
+    <!-- Sección Proveedores: formulario y tabla de proveedores -->
+    <section id="proveedores">
+      <h2>Proveedores</h2>
+      <form id="form-proveedor">
+        <input type="text" placeholder="Nombre" id="prov-nombre" required>
+        <input type="text" placeholder="Teléfono" id="prov-telefono" required pattern="[0-9]+" inputmode="numeric">
+        <input type="text" placeholder="Productos que surte" id="prov-productos" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ,]+">
+        <input type="text" placeholder="Frecuencia de pedidos" id="prov-frecuencia">
+        <button type="submit">Agregar Proveedor</button>
+      </form>
+      <table id="tabla-proveedores"></table>
+    </section>
+
+    <!-- Sección Empleados: formulario y tabla de empleados -->
+    <section id="empleados">
+      <h2>Empleados</h2>
+      <form id="form-empleado">
+        <input type="text" placeholder="Nombre" id="emp-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+        <input type="text" placeholder="Turno" id="emp-turno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+        <input type="text" placeholder="Dirección" id="emp-direccion">
+        <input type="text" placeholder="Teléfono" id="emp-telefono" pattern="[0-9]+" inputmode="numeric">
+        <button type="submit">Agregar Empleado</button>
+      </form>
+      <table id="tabla-empleados"></table>
+    </section>
+
+    <!-- Sección Reportes: reportes de ganancias, inventario bajo y caducidad -->
+    <section id="reportes">
+      <h2>Reportes</h2>
+      <div id="reporte-ganancias"></div>
+      <div id="reporte-inventario-bajo"></div>
+      <div id="reporte-caducidad"></div>
+    </section>
+  </main>
+
+  <!-- Enlazamos el archivo de JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html> 

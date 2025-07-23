@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Presentación: Sistema Web para Tiendas de Abarrotes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #fffde7; color: #3e2723; margin: 0; }
+    .slide { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px #c8b6a6; padding: 2.5rem 2rem; }
+    h1, h2, h3 { color: #ff9800; margin-top: 0; }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.3rem; }
+    ul, ol { margin-left: 1.5rem; }
+    .tienda { margin-bottom: 1.5rem; }
+    .problema { background: #ffe0b2; border-left: 5px solid #ff9800; padding: 0.5rem 1rem; margin: 0.5rem 0; }
+    .modulo { background: #e8f5e9; border-left: 5px solid #4caf50; padding: 0.5rem 1rem; margin: 0.5rem 0; }
+    .footer { text-align: center; color: #888; margin-top: 2rem; font-size: 1rem; }
+    @media (max-width: 600px) {
+      .slide { padding: 1rem 0.5rem; }
+      h1 { font-size: 1.5rem; }
+      h2 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="slide">
+  <h1>Diseño de Sistema Web para Tiendas de Abarrotes</h1>
+  <h3>Presentación de análisis, requerimientos y propuesta</h3>
+  <p><strong>Autor:</strong> Tu Nombre</p>
+  <p><strong>Fecha:</strong> 2024</p>
+</div>
+
+<div class="slide">
+  <h2>1. Objetivo del sistema</h2>
+  <ul>
+    <li>Diseñar e implementar una página web sencilla, intuitiva y funcional para pequeñas tiendas de abarrotes.</li>
+    <li>Permitir control de inventario, registro de ventas, visualización de productos y ganancias, registro de proveedores y empleados.</li>
+    <li>Resolver problemas comunes como robos, productos vencidos y falta de control.</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>2. Resumen de entrevistas</h2>
+  <div class="tienda">
+    <strong>LA NUEVA MIXTECA:</strong>
+    <ul>
+      <li>Productos: abarrotes, botanas, refrescos, galletas, dulces</li>
+      <li>Inventario: ~50 productos, control en libreta</li>
+      <li>Datos clave: precio, cantidad</li>
+      <li>Actualización: diaria</li>
+      <li>Problema: robo de productos</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>CONDORITO II:</strong>
+    <ul>
+      <li>Productos: pan, papelería, básicos, comestibles</li>
+      <li>Inventario: +1000, control en itinerario</li>
+      <li>Datos clave: código/nombre, caducidad</li>
+      <li>Problema: desperdicios</li>
+      <li>Interés en sistema digital: ya tiene</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>Tienda Mamá Soco:</strong>
+    <ul>
+      <li>Productos: abarrotes, limpieza, regalos</li>
+      <li>Inventario: muchos, sin control</li>
+      <li>Datos clave: precio, caducidad</li>
+      <li>Problema: todo es a la vista</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>LA RECEPTORA:</strong>
+    <ul>
+      <li>Productos: papelería, novedades, sabritas, refrescos</li>
+      <li>Inventario: +100, control en libreta</li>
+      <li>Datos clave: precio, costo, ganancia</li>
+      <li>Problema: pérdidas por familiares</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>La mestiza:</strong>
+    <ul>
+      <li>Productos: refrescos, abarrotes, sabritas, jabones, galletas</li>
+      <li>Inventario: 80 productos, control en libreta</li>
+      <li>Datos clave: cantidad, precios</li>
+      <li>Problema: robo hormiga</li>
+      <li>Interés en sistema digital: no</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>FLASH PLASTIC:</strong>
+    <ul>
+      <li>Productos: sabritas, galletas, refrescos</li>
+      <li>Inventario: no toma inventario, control en libreta</li>
+      <li>Datos clave: precio</li>
+      <li>Problema: no toma el control</li>
+      <li>Interés en sistema digital: tal vez</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>Mini super los peques:</strong>
+    <ul>
+      <li>Productos: sabritas, galletas, refrescos, papelería, abarrotes</li>
+      <li>Inventario: +500, sistema de computadora</li>
+      <li>Datos clave: caducidad, precio</li>
+      <li>Problema: fecha de caducidad</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>Tendejón El Faisán:</strong>
+    <ul>
+      <li>Productos: alimentos, bebidas, sabritas, carnes frías, lácteos</li>
+      <li>Inventario: ~120, sistema de computadora</li>
+      <li>Datos clave: producto, precio</li>
+      <li>Problema: borrar una venta</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>Tienda divino niño:</strong>
+    <ul>
+      <li>Productos: abarrotes, sabritas, galletas, refrescos, dulces, comida para perros</li>
+      <li>Inventario: 100 productos, control en libreta</li>
+      <li>Datos clave: caducidad, sabor</li>
+      <li>Problema: olvidar anotar una venta</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+  <div class="tienda">
+    <strong>Tienda Leo:</strong>
+    <ul>
+      <li>Productos: sabritas, refrescos, galletas, abarrotes</li>
+      <li>Inventario: +100, control en libreta</li>
+      <li>Datos clave: valor del producto</li>
+      <li>Problema: ningún problema</li>
+      <li>Interés en sistema digital: sí</li>
+    </ul>
+  </div>
+</div>
+
+<div class="slide">
+  <h2>3. Problemas comunes detectados</h2>
+  <div class="problema">Robos hormiga y pérdida por descontrol</div>
+  <div class="problema">Olvido de registrar ventas</div>
+  <div class="problema">Productos vencidos o sin rotación</div>
+  <div class="problema">Dificultad para calcular ganancia real</div>
+  <div class="problema">Pedidos a proveedores sin seguimiento</div>
+  <div class="problema">Falta de control de productos tomados por familiares</div>
+</div>
+
+<div class="slide">
+  <h2>4. Requerimientos funcionales</h2>
+  <ul>
+    <li>Registro y control de productos (nombre, precio, cantidad, caducidad, categoría, marca)</li>
+    <li>Registro de ventas diarias (fecha, productos, cantidad, total, método de pago, cambio)</li>
+    <li>Visualización de ganancias y productos más vendidos</li>
+    <li>Registro de proveedores y pedidos</li>
+    <li>Registro de empleados (nombre, turno, dirección, teléfono)</li>
+    <li>Reportes: inventario bajo, productos próximos a caducar, historial de ingresos</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>5. Diseño visual sugerido</h2>
+  <ul>
+    <li>Paleta de colores cálida y amigable (verde, naranja, café)</li>
+    <li>Íconos grandes y botones con texto claro</li>
+    <li>Páginas responsivas (móvil y PC)</li>
+    <li>Dashboard central con resumen del día</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>6. Módulos del sistema</h2>
+  <div class="modulo"><strong>A) Productos / Inventario:</strong> nombre, precio, cantidad, caducidad, categoría, marca</div>
+  <div class="modulo"><strong>B) Ventas:</strong> fecha, productos vendidos, cantidad, total, método de pago, cambio</div>
+  <div class="modulo"><strong>C) Reportes:</strong> resumen de ventas, productos más vendidos, próximos a caducar, inventario bajo</div>
+  <div class="modulo"><strong>D) Empleados:</strong> nombre, turno, dirección, teléfono</div>
+  <div class="modulo"><strong>E) Proveedores:</strong> nombre, teléfono, productos, frecuencia de pedidos, notas de compra</div>
+  <div class="modulo"><strong>F) Servicios adicionales (opcional):</strong> pago de servicios, consignación, escáner de productos</div>
+</div>
+
+<div class="slide">
+  <h2>7. MVP recomendado</h2>
+  <ol>
+    <li>Registro de productos</li>
+    <li>Registro y visualización de ventas</li>
+    <li>Inventario actualizado automáticamente</li>
+    <li>Reporte de ganancias por día</li>
+    <li>Registro básico de proveedores</li>
+  </ol>
+</div>
+
+<div class="slide">
+  <h2>8. Tecnologías sugeridas</h2>
+  <ul>
+    <li><strong>Frontend:</strong> HTML, CSS, JavaScript (opcional: Bootstrap, Tailwind, React, Vue)</li>
+    <li><strong>Backend:</strong> PHP, Node.js, ASP.NET Core</li>
+    <li><strong>Base de datos:</strong> MySQL, PostgreSQL (opcional: Cassandra)</li>
+    <li><strong>Hosting:</strong> Railway, Render, Vercel, Somee</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h2>9. Conclusión</h2>
+  <ul>
+    <li>Un sistema digital ayuda a resolver los problemas más frecuentes de las tiendas de abarrotes.</li>
+    <li>La propuesta es flexible y puede adaptarse a las necesidades de cada tienda.</li>
+    <li>El MVP permite empezar con lo esencial y crecer según se requiera.</li>
+  </ul>
+  <div class="footer">
+    ¡Gracias por su atención!
+  </div>
+</div>
+
+</body>
+</html> 

@@ -1,0 +1,82 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f7f3ee; /* Fondo cálido */
+  color: #3e2723; /* Café oscuro para texto */
+  margin: 0;
+  padding: 0;
+}
+header {
+  background: #ff9800; /* Naranja cálido */
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+}
+nav button {
+  background: #4caf50; /* Verde amigable */
+  color: #fff;
+  border: none;
+  margin: 0.2rem;
+  padding: 0.7rem 1.2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+nav button:hover {
+  background: #388e3c; /* Verde más oscuro al pasar el mouse */
+}
+main {
+  max-width: 900px;
+  margin: 2rem auto;
+  background: #fffde7; /* Fondo claro para el contenido */
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px #c8b6a6;
+}
+section {
+  display: none;
+}
+section.active {
+  display: block;
+}
+form {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+form input, form select, form button {
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #bdbdbd;
+  font-size: 1rem;
+}
+form button {
+  background: #ff9800;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+form button:hover {
+  background: #e65100;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+th, td {
+  border: 1px solid #bdbdbd;
+  padding: 0.5rem;
+  text-align: left;
+}
+th {
+  background: #ffe0b2; /* Encabezado de tabla en naranja claro */
+}
+@media (max-width: 600px) {
+  main {
+    padding: 0.5rem;
+  }
+  form {
+    flex-direction: column;
+  }
+} 
