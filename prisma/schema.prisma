@@ -17,10 +17,17 @@ model Empleado {
   id        Int     @id @default(autoincrement())
   nombre    String
   puesto    String
+  turno     String?
+  direccion String?
+  telefono  String?
   salario   Float
+  password  String
+  rol       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   ventas    Venta[]
+  permisos  Json?
+  registroTurno RegistroTurno[]
 }
 
 model Marca {

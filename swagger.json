@@ -37,11 +37,22 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "nombre": { "type": "string" },
-                  "puesto": { "type": "string" },
-                  "salario": { "type": "number" }
+                  "nombre": { "type": "string", "example": "Juan Pérez" },
+                  "puesto": { "type": "string", "example": "Cajero" },
+                  "turno": { "type": "string", "example": "Matutino" },
+                  "direccion": { "type": "string", "example": "Calle 123, Col. Centro" },
+                  "telefono": { "type": "string", "example": "9991234567" },
+                  "salario": { "type": "number", "example": 5000 }
                 },
                 "required": ["nombre", "puesto", "salario"]
+              },
+              "example": {
+                "nombre": "Juan Pérez",
+                "puesto": "Cajero",
+                "turno": "Matutino",
+                "direccion": "Calle 123, Col. Centro",
+                "telefono": "9991234567",
+                "salario": 5000
               }
             }
           }
@@ -390,6 +401,9 @@
           "id": { "type": "integer" },
           "nombre": { "type": "string" },
           "puesto": { "type": "string" },
+          "turno": { "type": "string" },
+          "direccion": { "type": "string" },
+          "telefono": { "type": "string" },
           "salario": { "type": "number" },
           "createdAt": { "type": "string", "format": "date-time" },
           "updatedAt": { "type": "string", "format": "date-time" }

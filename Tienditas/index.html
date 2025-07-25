@@ -7,96 +7,139 @@
   <!-- Enlazamos el archivo de estilos -->
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-  <!-- Encabezado y navegación principal -->
-  <header>
-    <h1>Dashboard - Tienda de Abarrotes</h1>
-    <nav>
-      <!-- Botones para cambiar de sección -->
-      <button onclick="showSection('dashboard')">Dashboard</button>
-      <button onclick="showSection('productos')">Productos</button>
-      <button onclick="showSection('ventas')">Ventas</button>
-      <button onclick="showSection('proveedores')">Proveedores</button>
-      <button onclick="showSection('empleados')">Empleados</button>
-      <button onclick="showSection('reportes')">Reportes</button>
-    </nav>
-  </header>
+<body onload="initApp()">
+  <!-- Modal de registro de Admin -->
+  <div id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:2em; border-radius:10px; min-width:300px;">
+      <h2>Registro de Administrador</h2>
+      <label>Usuario:<br><input type="text" id="adminUser" autocomplete="off"></label><br><br>
+      <label>Contraseña:<br><input type="password" id="adminPass"></label><br><br>
+      <button onclick="registerAdmin()">Registrar</button>
+    </div>
+  </div>
 
-  <main>
-    <!-- Sección Dashboard: resumen del día -->
-    <section id="dashboard" class="active">
-      <h2>Resumen del Día</h2>
-      <div id="resumen-dia"></div>
-    </section>
+  <!-- Modal de login de Empleado -->
+  <div id="empleadoModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:2em; border-radius:10px; min-width:300px;">
+      <h2>Login de Empleado</h2>
+      <label>Usuario:<br><input type="text" id="empleadoUser"></label><br><br>
+      <label>Token:<br><input type="text" id="empleadoToken"></label><br><br>
+      <button onclick="loginEmpleado()">Entrar</button>
+      <button onclick="mostrarLoginAdmin()" style="margin-left:10px;">Entrar como Admin</button>
+    </div>
+  </div>
 
-    <!-- Sección Productos: formulario y tabla de inventario -->
-    <section id="productos">
-      <h2>Inventario de Productos</h2>
-      <form id="form-producto">
-        <input type="text" placeholder="Nombre" id="prod-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
-        <input type="number" placeholder="Precio" id="prod-precio" required min="0" step="1" inputmode="numeric">
-        <input type="number" placeholder="Cantidad" id="prod-cantidad" required min="0" step="1" inputmode="numeric">
-        <input type="date" placeholder="Caducidad" id="prod-caducidad">
-        <input type="text" placeholder="Marca" id="prod-marca">
-        <button type="submit">Agregar Producto</button>
-      </form>
-      <table id="tabla-productos"></table>
-    </section>
+  <!-- Contenido principal -->
+  <div id="mainContent">
+    <!-- Encabezado y navegación principal -->
+    <header>
+      <h1>Dashboard - Tienda de Abarrotes</h1>
+      <nav>
+        <!-- Botones para cambiar de sección -->
+        <button onclick="showSection('dashboard')">Dashboard</button>
+        <button onclick="showSection('productos')">Productos</button>
+        <button onclick="showSection('ventas')">Ventas</button>
+        <button onclick="showSection('proveedores')">Proveedores</button>
+        <button onclick="showSection('empleados')">Empleados</button>
+        <button onclick="showSection('reportes')">Reportes</button>
+      </nav>
+    </header>
 
-    <!-- Sección Ventas: formulario y tabla de ventas -->
-    <section id="ventas">
-      <h2>Registro de Ventas</h2>
-      <form id="form-venta">
-        <input type="text" id="venta-fecha" readonly style="background:#eee;" placeholder="Fecha y hora automática">
-        <select id="venta-producto" required></select>
-        <input type="number" placeholder="Cantidad" id="venta-cantidad" required min="1" step="1" inputmode="numeric">
-        <select id="venta-metodo">
-          <option value="efectivo">Efectivo</option>
-          <option value="tarjeta">Tarjeta</option>
-          <option value="transferencia">Transferencia</option>
-        </select>
-        <input type="number" placeholder="Con cuánto paga" id="venta-pago" min="0" step="1" inputmode="numeric" pattern="[0-9]+">
-        <button type="submit">Registrar Venta</button>
-      </form>
-      <table id="tabla-ventas"></table>
-    </section>
+    <main>
+      <!-- Sección Dashboard: resumen del día -->
+      <section id="dashboard" class="active">
+        <h2>Resumen del Día</h2>
+        <div id="resumen-dia"></div>
+      </section>
 
-    <!-- Sección Proveedores: formulario y tabla de proveedores -->
-    <section id="proveedores">
-      <h2>Proveedores</h2>
-      <form id="form-proveedor">
-        <input type="text" placeholder="Nombre" id="prov-nombre" required>
-        <input type="text" placeholder="Teléfono" id="prov-telefono" required pattern="[0-9]+" inputmode="numeric">
-        <input type="text" placeholder="Productos que surte" id="prov-productos" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ,]+">
-        <input type="text" placeholder="Frecuencia de pedidos" id="prov-frecuencia">
-        <button type="submit">Agregar Proveedor</button>
-      </form>
-      <table id="tabla-proveedores"></table>
-    </section>
+      <!-- Sección Productos: formulario y tabla de inventario -->
+      <section id="productos">
+        <h2>Inventario de Productos</h2>
+        <form id="form-producto">
+          <input type="text" placeholder="Nombre" id="prod-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+          <input type="number" placeholder="Precio" id="prod-precio" required min="0" step="1" inputmode="numeric">
+          <input type="number" placeholder="Cantidad" id="prod-cantidad" required min="0" step="1" inputmode="numeric">
+          <input type="date" placeholder="Caducidad" id="prod-caducidad">
+          <input type="text" placeholder="Marca" id="prod-marca">
+          <button type="submit">Agregar Producto</button>
+        </form>
+        <table id="tabla-productos"></table>
+      </section>
 
-    <!-- Sección Empleados: formulario y tabla de empleados -->
-    <section id="empleados">
-      <h2>Empleados</h2>
-      <form id="form-empleado">
-        <input type="text" placeholder="Nombre" id="emp-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
-        <input type="text" placeholder="Turno" id="emp-turno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
-        <input type="text" placeholder="Dirección" id="emp-direccion">
-        <input type="text" placeholder="Teléfono" id="emp-telefono" pattern="[0-9]+" inputmode="numeric">
-        <button type="submit">Agregar Empleado</button>
-      </form>
-      <table id="tabla-empleados"></table>
-    </section>
+      <!-- Sección Ventas: formulario y tabla de ventas -->
+      <section id="ventas">
+        <h2>Registro de Ventas</h2>
+        <form id="form-venta">
+          <input type="text" id="venta-fecha" readonly style="background:#eee;" placeholder="Fecha y hora automática">
+          <select id="venta-producto" required></select>
+          <input type="number" placeholder="Cantidad" id="venta-cantidad" required min="1" step="1" inputmode="numeric">
+          <select id="venta-metodo">
+            <option value="efectivo">Efectivo</option>
+            <option value="tarjeta">Tarjeta</option>
+            <option value="transferencia">Transferencia</option>
+          </select>
+          <input type="number" placeholder="Con cuánto paga" id="venta-pago" min="0" step="1" inputmode="numeric" pattern="[0-9]+">
+          <button type="submit">Registrar Venta</button>
+        </form>
+        <table id="tabla-ventas"></table>
+      </section>
 
-    <!-- Sección Reportes: reportes de ganancias, inventario bajo y caducidad -->
-    <section id="reportes">
-      <h2>Reportes</h2>
-      <div id="reporte-ganancias"></div>
-      <div id="reporte-inventario-bajo"></div>
-      <div id="reporte-caducidad"></div>
-    </section>
-  </main>
+      <!-- Sección Proveedores: formulario y tabla de proveedores -->
+      <section id="proveedores">
+        <h2>Proveedores</h2>
+        <form id="form-proveedor">
+          <input type="text" placeholder="Nombre" id="prov-nombre" required>
+          <input type="text" placeholder="Teléfono" id="prov-telefono" required pattern="[0-9]+" inputmode="numeric">
+          <input type="text" placeholder="Productos que surte" id="prov-productos" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ,]+">
+          <input type="text" placeholder="Frecuencia de pedidos" id="prov-frecuencia">
+          <button type="submit">Agregar Proveedor</button>
+        </form>
+        <table id="tabla-proveedores"></table>
+      </section>
+
+      <!-- Sección Empleados: formulario y tabla de empleados -->
+      <section id="empleados">
+        <h2>Empleados</h2>
+        <form id="form-empleado">
+          <input type="text" placeholder="Nombre" id="emp-nombre" required pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+          <input type="text" placeholder="Turno" id="emp-turno" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]+">
+          <input type="text" placeholder="Dirección" id="emp-direccion">
+          <input type="text" placeholder="Teléfono" id="emp-telefono" pattern="[0-9]+" inputmode="numeric">
+          <button type="submit">Agregar Empleado</button>
+        </form>
+        <table id="tabla-empleados"></table>
+      </section>
+
+      <!-- Sección Reportes: reportes de ganancias, inventario bajo y caducidad -->
+      <section id="reportes">
+        <h2>Reportes</h2>
+        <div id="reporte-ganancias"></div>
+        <div id="reporte-inventario-bajo"></div>
+        <div id="reporte-caducidad"></div>
+      </section>
+    </main>
+  </div>
 
   <!-- Enlazamos el archivo de JavaScript -->
   <script src="app.js"></script>
+  <script>
+    function initApp() {
+      // Si no hay admin registrado, mostrar modal de registro
+      if (!localStorage.getItem('admin')) {
+        document.getElementById('adminModal').style.display = 'flex';
+        document.getElementById('mainContent').style.display = 'none';
+      } else if (!localStorage.getItem('session') || localStorage.getItem('session') === 'none') {
+        // Si no hay sesión activa, mostrar login de empleado
+        document.getElementById('empleadoModal').style.display = 'flex';
+        document.getElementById('mainContent').style.display = 'none';
+      } else {
+        document.getElementById('adminModal').style.display = 'none';
+        document.getElementById('empleadoModal').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        // Mostrar/ocultar secciones según tipo de usuario
+        ajustarVistaPorRol();
+      }
+    }
+  </script>
 </body>
 </html> 

@@ -320,12 +320,17 @@ document.getElementById('form-empleado').onsubmit = function(e) {
     alert('El turno solo puede contener letras y espacios.');
     return;
   }
+  let token;
   if (editandoEmpleado !== null) {
-    empleados[editandoEmpleado] = { nombre, turno, direccion, telefono };
+    // Si se edita, mantener el token existente
+    token = empleados[editandoEmpleado].token;
+    empleados[editandoEmpleado] = { nombre, turno, direccion, telefono, token };
     editandoEmpleado = null;
     this.querySelector('button[type="submit"]').textContent = 'Agregar Empleado';
   } else {
-    empleados.push({ nombre, turno, direccion, telefono });
+    token = generarTokenFijo(nombre);
+    empleados.push({ nombre, turno, direccion, telefono, token });
+    alert('Empleado registrado. Token de acceso: ' + token);
   }
   this.reset();
   guardarDatos();
@@ -334,13 +339,14 @@ document.getElementById('form-empleado').onsubmit = function(e) {
 function renderEmpleados() {
   const tabla = document.getElementById('tabla-empleados');
   tabla.innerHTML = `<tr>
-    <th>Nombre</th><th>Turno</th><th>Dirección</th><th>Teléfono</th><th>Acciones</th>
+    <th>Nombre</th><th>Turno</th><th>Dirección</th><th>Teléfono</th><th>Token</th><th>Acciones</th>
   </tr>` + empleados.map((e, i) =>
     `<tr>
       <td>${e.nombre}</td>
       <td>${e.turno}</td>
       <td>${e.direccion}</td>
       <td>${e.telefono}</td>
+      <td>${e.token || '-'}</td>
       <td>
         <button onclick="editarEmpleado(${i})">Editar</button>
         <button onclick="eliminarEmpleado(${i})">Eliminar</button>
@@ -438,4 +444,92 @@ window.showSection = function(id) {
   if (id === 'proveedores') renderProveedores();
   if (id === 'empleados') renderEmpleados();
   if (id === 'reportes') renderReportes();
-}; 
+};
+
+// --- Autenticación y roles ---
+window.registerAdmin = function() {
+  const user = document.getElementById('adminUser').value.trim();
+  const pass = document.getElementById('adminPass').value;
+  if (!user || !pass) {
+    alert('Usuario y contraseña requeridos');
+    return;
+  }
+  localStorage.setItem('admin', JSON.stringify({ user, pass }));
+  localStorage.setItem('session', 'admin');
+  document.getElementById('adminModal').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  ajustarVistaPorRol();
+};
+
+window.loginEmpleado = function() {
+  const user = document.getElementById('empleadoUser').value.trim();
+  const token = document.getElementById('empleadoToken').value.trim();
+  cargarDatos();
+  const emp = empleados.find(e => e.nombre === user && e.token === token);
+  if (!emp) {
+    alert('Usuario o token incorrecto');
+    return;
+  }
+  localStorage.setItem('session', 'empleado:' + user);
+  document.getElementById('empleadoModal').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  ajustarVistaPorRol();
+};
+
+window.ajustarVistaPorRol = function() {
+  const session = localStorage.getItem('session');
+  // Mostrar todo si es admin
+  if (session === 'admin') {
+    document.querySelectorAll('nav button').forEach(btn => btn.style.display = 'inline-block');
+    document.getElementById('productos').style.display = '';
+    document.getElementById('proveedores').style.display = '';
+    document.getElementById('empleados').style.display = '';
+    document.getElementById('reportes').style.display = '';
+    document.getElementById('dashboard').style.display = '';
+    // Botón cerrar sesión
+    mostrarBotonCerrarSesion();
+  } else if (session && session.startsWith('empleado:')) {
+    // Solo mostrar ventas
+    document.querySelectorAll('nav button').forEach(btn => {
+      if (btn.textContent === 'Ventas') btn.style.display = 'inline-block';
+      else btn.style.display = 'none';
+    });
+    document.getElementById('ventas').style.display = '';
+    document.getElementById('productos').style.display = 'none';
+    document.getElementById('proveedores').style.display = 'none';
+    document.getElementById('empleados').style.display = 'none';
+    document.getElementById('reportes').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'none';
+    mostrarBotonCerrarSesion();
+    showSection('ventas');
+  }
+};
+
+function mostrarBotonCerrarSesion() {
+  if (!document.getElementById('btnCerrarSesion')) {
+    const btn = document.createElement('button');
+    btn.id = 'btnCerrarSesion';
+    btn.textContent = 'Cerrar Sesión';
+    btn.style.marginLeft = '1em';
+    btn.onclick = function() {
+      localStorage.setItem('session', 'none');
+      location.reload();
+    };
+    document.querySelector('nav').appendChild(btn);
+  }
+}
+
+window.mostrarLoginAdmin = function() {
+  document.getElementById('empleadoModal').style.display = 'none';
+  document.getElementById('adminModal').style.display = 'flex';
+  document.getElementById('mainContent').style.display = 'none';
+  // Limpiar campos
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
+};
+
+// --- Modificar registro de empleados para token fijo ---
+function generarTokenFijo(nombre) {
+  // Token: nombre en minúsculas + 3 dígitos aleatorios
+  return nombre.toLowerCase().replace(/ /g, '') + Math.floor(100 + Math.random() * 900);
+} 
